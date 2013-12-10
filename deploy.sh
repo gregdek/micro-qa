@@ -1,10 +1,16 @@
 #!/bin/bash -x
 
+### Extend yum timeout
+echo "timeout=120" >> /etc/yum.conf
+
 ### Add EPEL repo
 yum install -y http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
 
 ### Install deps
 yum install -y python-devel python-setuptools gcc make python-virtualenv java-1.7.0-openjdk-devel git ntp wget unzip ant
+
+### Configure git to handle potential http.postBuffer issues
+git config --global http.postBuffer 524288000
 
 ### Install jenkins
 wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat/jenkins.repo
